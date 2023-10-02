@@ -1,4 +1,4 @@
-class Carta:
+class Card:
 
     def __init__(self, valor, letra):
         self.valor = valor
