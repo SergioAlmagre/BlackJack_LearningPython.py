@@ -11,7 +11,7 @@ class Game:
         self.deckOfCards = self.createDeckOfCards()
 
     def createDeckOfCards(self):
-        cardValue = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+        cardValue = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "J", "Q", "K"]
         cardSuit = ["t", "c", "p", "r"]
         mainDeckOfCards = DeckOfCards()
 
@@ -22,12 +22,29 @@ class Game:
         return mainDeckOfCards
 
 
-    def shuffleCards(self, deckOfCards):
-        random.shuffle(deckOfCards.cards)
+    def shuffleCards(self):
+        random.shuffle(self.deckOfCards.cards)
 
     def takeCard(self):
-        card = self.deckOfCards.cards.pop()
-        return card
+        for i in self.players:
+            if i.turn == 1:
+                if not i.stand:
+                    if i.human == 0:
+                        card = self.deckOfCards.cards.pop()
+                        print(card)
+                        i.deckOfCards.cards.append(card)
+                    else:
+                        total = i.sumValues()
+                        print("Your total is ", total, "\n")
+                        answer = input(" Do you want to take one more? \n Y/N\n").upper().strip()
+                        if answer == "Y":
+                            card = self.deckOfCards.cards.pop()
+                            print(card)
+                            i.deckOfCards.cards.append(card)
+                        else:
+                            i.stand = True
+                            print(f"The game continue whithout {i.name}!")
+
 
     def changeTurn(self):
         for i in range(0, len(self.players)):
@@ -49,26 +66,54 @@ class Game:
             if i.turn == 1:
                 if not i.stand:
                     total = i.sumValues()
-                    print(total)
                     if i.human == 0:
                         if total >= 17 and total <= 21:
                             i.stand = True
                         elif total > 21:
                             i.stand = True
-                            i.win = False
+                            i.winner = False
                     else:
-                        print("Your total is ", total, "\n")
-                        answer = input(" Do you want to stand? \n").upper()
-                        if answer == "S":
+                        if total > 21:
                             i.stand = True
+                            i.winner = False
                         else:
-                            print("The game continue!")
+                            print("Your total is ", total, "\n")
+                            answer = input(" Do you want to stand? \n Y/N\n").upper().strip()
+                            if answer == "Y":
+                                i.stand = True
+                            else:
+                                print("The game continue!")
+
+    def checkWinners(self):
+        allStanded = True
+        isThereWinner = False
+        winner = None
+        for i in self.players:
+            if not i.stand:
+                allStanded = False
+
+        if allStanded:
+            for i in self.players:
+                if i.winner:
+                    winner = i
+                    break
+            for i in self.players:
+                if i.winner:
+                    if i.points > winner.points:
+                        winner = i
+            isThereWinner = True
+
+            if winner is not None:
+                print(f"The winner is {winner.name} with {winner.points}!!!!\n")
+            else:
+                print("Everyone losed!.\n")
+            return isThereWinner
 
 
     def __str__(self):
-        players_str = ", ".join(str(player) for player in self.players)
+        players_str = "".join(str(player) for player in self.players)
         # cards_str = str(self.deckOfCards)
-        return f"Players: {players_str}\nCards:"
+        return f"{players_str}\n"
 
 
 

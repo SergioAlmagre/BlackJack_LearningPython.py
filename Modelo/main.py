@@ -1,10 +1,6 @@
 from Player import Player
 from Modelo.Game import Game
 
-def menu():
-    print("1 - Coger Carta"
-          "2 - Salir")
-
 def numberOfPlayers():
     totalPlayers = []
     numberIntPlayers = 0
@@ -34,34 +30,35 @@ def numberOfPlayers():
     return totalPlayers
 
 
+def askToExit():
+    exit = False
+    answer = input(" Do you want to exit? \n Y/N\n").upper().strip()
+    if answer == "Y":
+        exit = True
+
+    return exit
 
 
 
-def init():
+def start():
+    exit = False
 
-    nPlayers = numberOfPlayers()
+    while not exit:
+        winner = False
+        nPlayers = numberOfPlayers()
+        blackJack = Game(nPlayers)
 
-    blackJack = Game(nPlayers)
-    # print(blackJack)
+        blackJack.shuffleCards()
+        blackJack.randomTurn()
 
-    blackJack.randomTurn()
-    print(blackJack)
+        while not winner:
+            blackJack.changeTurn()
+            blackJack.takeCard()
+            blackJack.checkCards()
+            print(blackJack)
+            winner = blackJack.checkWinners()
 
-    blackJack.checkCards()
-
-
-    blackJack.changeTurn()
-    print(blackJack)
-
-    newCard = blackJack.takeCard()
-    print(newCard)
-
-
-    #
-    # blackJack.shuffleCards(blackJack.deckOfCards)
-    # print(blackJack.deckOfCards)
+        exit = askToExit()
 
 
-
-
-init()
+start()
