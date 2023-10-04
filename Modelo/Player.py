@@ -1,20 +1,21 @@
 from DeckOfCards import DeckOfCards
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name,human):
         self.name = name
         self.turn = 0
         self.point = 0
-        self.human = 0
+        self.human = human
         self.stand = False
         self.winner = True
         self.deckOfCards = DeckOfCards()
 
     def sumValues(self):
         total = 0
-        for i in self.deckOfCards:
+        for i in self.deckOfCards.cards:
             total += i.value
-            return total
+
+        return total
 
 
 

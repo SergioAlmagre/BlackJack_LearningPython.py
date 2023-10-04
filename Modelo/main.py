@@ -8,6 +8,7 @@ def menu():
 def numberOfPlayers():
     totalPlayers = []
     numberIntPlayers = 0
+    humanNumber = 0
 
     correct = False
     while not correct:
@@ -20,7 +21,15 @@ def numberOfPlayers():
 
     for i in range(1, numberIntPlayers + 1):
         namePlayer = input("What is the name of the new player number " + str(i) + "\n")
-        newPlayer = Player(namePlayer)
+
+        human = input("Is human this player? \n0 - NO\n1 - YES\n")
+        try:
+            humanNumber = int(human)
+            correct = True
+        except ValueError:
+            print("Something was wrong, try to put a new value again\n")
+
+        newPlayer = Player(namePlayer, humanNumber)
         totalPlayers.append(newPlayer)
     return totalPlayers
 
@@ -34,9 +43,12 @@ def init():
 
     blackJack = Game(nPlayers)
     # print(blackJack)
+
     blackJack.randomTurn()
     print(blackJack)
+
     blackJack.checkCards()
+
 
     blackJack.changeTurn()
     print(blackJack)

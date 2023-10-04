@@ -47,10 +47,23 @@ class Game:
         total = 0
         for i in self.players:
             if i.turn == 1:
-                total = i.sumValues()
-                if total > 17 & total < 21:
-                    i.stand = True
-                print(total)
+                if not i.stand:
+                    total = i.sumValues()
+                    print(total)
+                    if i.human == 0:
+                        if total >= 17 and total <= 21:
+                            i.stand = True
+                        elif total > 21:
+                            i.stand = True
+                            i.win = False
+                    else:
+                        print("Your total is ", total, "\n")
+                        answer = input(" Do you want to stand? \n").upper()
+                        if answer == "S":
+                            i.stand = True
+                        else:
+                            print("The game continue!")
+
 
     def __str__(self):
         players_str = ", ".join(str(player) for player in self.players)
