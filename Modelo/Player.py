@@ -1,23 +1,25 @@
-from Card import Carta
-class Jugador:
+from DeckOfCards import DeckOfCards
 
-    def __init__(self, machine, turn, points, deckOfCards):
-        self.machine = machine
-        self.turn = turn
-        self.points = points
-        self.deckOfCards = deckOfCards
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.turn = 0
+        self.point = 0
+        self.human = 0
+        self.stand = False
+        self.winner = True
+        self.deckOfCards = DeckOfCards()
+
+    def sumValues(self):
+        total = 0
+        for i in self.deckOfCards:
+            total += i.value
+            return total
+
+
+
 
     def __str__(self):
-        return f"{self.cartas}{self.puntos}"
+        return f"Name: {self.name}, Turn: {self.turn}, Point: {self.point}"
 
-    def takeCard(baraja):
-        carta = baraja.pop()
-        print("Carta seleccionada: " + str(carta))
-        # cartasRestanantes = baraja.count()
-        # print("En la baraja quedan " + cartasRestanantes)
-
-    def sumarCartas(self, player):
-        for carta in self.cartas:
-            self.puntos += carta.valor
-        return self.puntos
 
