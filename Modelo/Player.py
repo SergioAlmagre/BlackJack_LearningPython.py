@@ -14,9 +14,7 @@ class Player:
         total = 0
 
         card_values = {  # Define un diccionario que mapea los valores de las cartas a sus valores numéricos
-            "1": 1, "2": 2, "3": 3, "4": 4, "5": 5,
-            "6": 6, "7": 7, "8": 8, "9": 9,
-            "J": 10, "Q": 10, "K": 10
+            "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "J": 10, "Q": 10, "K": 10
         }
 
         for i in self.deckOfCards.cards:
